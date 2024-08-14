@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build and analyze
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:
-          path: ~/.sonar/cache
+          path: C:\Users\runneradmin\.sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
@@ -31,24 +31,26 @@ jobs:
         id: cache-sonar-scanner
         uses: actions/cache@v1
         with:
-          path: ~/.sonar/scanner
+          path: C:\Users\runneradmin\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
       - name: Install SonarQube scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: pwsh
         run: |
-          mkdir -p ~/.sonar/scanner
-          dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
+          New-Item -Path C:\Users\runneradmin\.sonar\scanner -ItemType Directory -Force
+          dotnet tool update dotnet-sonarscanner --tool-path C:\Users\runneradmin\.sonar\scanner
 
       - name: Build and analyze
+        shell: pwsh
         run: |
-          ~/.sonar/scanner/dotnet-sonarscanner begin /k:"dotnetwork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          C:\Users\runneradmin\.sonar\scanner\dotnet-sonarscanner begin /k:"newone" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
-          ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          C:\Users\runneradmin\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Pull Blacklock Code Scanner Docker Image
         run: docker pull blacklocksec/code-scanner:latest
 
       - name: Run Blacklock Code Scanner
-        run: docker run --rm -v $(pwd):/app -e SONAR_PROJECTKEY="dotnetwork" -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} blacklocksec/code-scanner:latest
+        run: docker run --rm -v ${GITHUB_WORKSPACE}:/app -e SONAR_PROJECTKEY="newone" -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} blacklocksec/code-scanner:latest
