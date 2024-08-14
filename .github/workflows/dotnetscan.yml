@@ -18,19 +18,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
-      - name: Cache SonarQube packages
-        uses: actions/cache@v1
-        with:
-          path: ~\.sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache SonarQube scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v1
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
       - name: Install SonarQube scanner globally
         shell: powershell
         run: |
