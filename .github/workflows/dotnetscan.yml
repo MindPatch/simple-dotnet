@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and analyze
         run: |
-          ~/.sonar/scanner/dotnet-sonarscanner begin /k:"<project key>" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          ~/.sonar/scanner/dotnet-sonarscanner begin /k:"dotnetwork" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
@@ -51,4 +51,4 @@ jobs:
         run: docker pull blacklocksec/code-scanner:latest
 
       - name: Run Blacklock Code Scanner
-        run: docker run --rm -v $(pwd):/app -e SONAR_PROJECTKEY="<project key>" -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} blacklocksec/code-scanner:latest
+        run: docker run --rm -v $(pwd):/app -e SONAR_PROJECTKEY="dotnetwork" -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} blacklocksec/code-scanner:latest
