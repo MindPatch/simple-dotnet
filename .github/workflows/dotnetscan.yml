@@ -3,54 +3,44 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
+
 
 jobs:
   build:
     name: Build and analyze
     runs-on: windows-latest
-
+    
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
           java-version: 17
-
       - name: Cache SonarQube packages
         uses: actions/cache@v1
         with:
-          path: C:\Users\runneradmin\.sonar\cache
+          path: ~\.sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-
       - name: Cache SonarQube scanner
         id: cache-sonar-scanner
         uses: actions/cache@v1
         with:
-          path: C:\Users\runneradmin\.sonar\scanner
+          path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
-
       - name: Install SonarQube scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: pwsh
+        shell: powershell
         run: |
-          New-Item -Path C:\Users\runneradmin\.sonar\scanner -ItemType Directory -Force
-          dotnet tool update dotnet-sonarscanner --tool-path C:\Users\runneradmin\.sonar\scanner
-
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: Build and analyze
-        shell: pwsh
+        shell: powershell
         run: |
-          C:\Users\runneradmin\.sonar\scanner\dotnet-sonarscanner begin /k:"newone" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"newone" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
-          C:\Users\runneradmin\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Pull Blacklock Code Scanner Docker Image
-        run: docker pull blacklocksec/code-scanner:latest
-
-      - name: Run Blacklock Code Scanner
-        run: docker run --rm -v ${GITHUB_WORKSPACE}:/app -e SONAR_PROJECTKEY="newone" -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} blacklocksec/code-scanner:latest
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
