@@ -5,7 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  SONAR_PROJECTKEY: 'azure-one'
+  SONAR_PROJECTKEY: 'azure-the-test'
   SONAR_HOST_URL: $(SONAR_HOST_URL)
   SONAR_TOKEN: $(SONAR_TOKEN)
 
@@ -16,7 +16,7 @@ steps:
 - task: Docker@2
   inputs:
     command: 'pull'
-    container: 'blacklocksec/code-scanner:latest'
+    imageName: 'blacklocksec/code-scanner:latest'
   displayName: 'Pull Blacklock Code Scanner Docker Image'
 
 - script: |
