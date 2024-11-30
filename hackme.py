@@ -15,7 +15,7 @@ USERNAME = 'admin'#test
 PASSWORD = 'p@ssword' # test
 name = 'my blog'
 k='no'
-now = datetime.datetime.today()
+now = datetime.datetime.today() # test
 date = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
 # application
 
