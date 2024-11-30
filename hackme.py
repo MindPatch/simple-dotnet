@@ -9,7 +9,7 @@ from contextlib import closing# teast
 from jinja2 import Environment
 # configuration test
 DATABASE = 'hackme.db'# beat # tester
-DEBUG = True
+DEBUG = True # tester
 SECRET_KEY = 'development key' 
 USERNAME = 'admin'#test# test 
 PASSWORD = 'p@ssword' # test
