@@ -20,7 +20,7 @@ date = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
 # application
 
 app = Flask(__name__)
-Jinja2 = Environment()
+Jinja2 = Environment() # test
 app.config.from_object(__name__)
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
