@@ -17,7 +17,7 @@ name = 'my blog'
 k='no'
 now = datetime.datetime.today() # test
 date = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
-# application
+# application# test
 
 app = Flask(__name__)
 Jinja2 = Environment() # test
