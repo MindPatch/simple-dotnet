@@ -8,7 +8,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing# teast
 from jinja2 import Environment
 # configuration test
-DATABASE = 'hackme.db'# beat
+DATABASE = 'hackme.db'# beat # tester
 DEBUG = True
 SECRET_KEY = 'development key' 
 USERNAME = 'admin'#test# test 
