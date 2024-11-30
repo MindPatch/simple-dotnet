@@ -18,7 +18,7 @@ k='no'
 now = datetime.datetime.today() # test
 date = str(now.year)+'-'+str(now.month)+'-'+str(now.day)
 # application# test
-
+# test
 app = Flask(__name__)
 Jinja2 = Environment() # test
 app.config.from_object(__name__)
