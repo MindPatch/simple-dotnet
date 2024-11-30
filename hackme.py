@@ -10,8 +10,8 @@ from jinja2 import Environment
 # configuration test
 DATABASE = 'hackme.db'# beat
 DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'#test# test
+SECRET_KEY = 'development key' 
+USERNAME = 'admin'#test# test 
 PASSWORD = 'p@ssword' # test
 name = 'my blog'
 k='no'
