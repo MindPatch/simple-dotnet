@@ -7,7 +7,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
         abort, render_template, flash,make_response
 from contextlib import closing
 from jinja2 import Environment
-# configuration s
+# configuration test
 DATABASE = 'hackme.db'
 DEBUG = True
 SECRET_KEY = 'development key'
