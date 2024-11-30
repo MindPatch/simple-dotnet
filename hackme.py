@@ -11,7 +11,7 @@ from jinja2 import Environment
 DATABASE = 'hackme.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-USERNAME = 'admin'
+USERNAME = 'admin'#test
 PASSWORD = 'p@ssword'
 name = 'my blog'
 k='no'
